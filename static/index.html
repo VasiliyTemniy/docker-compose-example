@@ -6,33 +6,42 @@
 <body>
   <script>
     const PORT = 3000;
-    const socket = new WebSocket(`ws://localhost:${PORT}`);
+    let socket;
 
-    socket.onopen = () => {
-      console.log('Connected to WebSocket');
-    };
+    function connectWebSocket() {
 
-    socket.onmessage = (event) => {
-      console.log('Received data:', event.data);
+      socket = new WebSocket(`ws://localhost:${PORT}`);
 
-      const date = new Date(event.data);
+      socket.onopen = () => {
+        console.log('Connected to WebSocket');
+      };
 
-      const day = date.getDay();
-      const month = date.getMonth();
-      const year = date.getFullYear();
+      socket.onmessage = (event) => {
+        console.log('Received data:', event.data);
 
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-      const milliseconds = date.getMilliseconds();
+        const date = new Date(event.data);
 
-      const main = document.getElementById('main');
-      main.innerText = `сегодня ${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}; время ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds};  миллисекунды: ${milliseconds < 10 ? '0' + milliseconds : milliseconds}`;
-    };
+        const day = date.getDay();
+        const month = date.getMonth();
+        const year = date.getFullYear();
 
-    socket.onclose = () => {
-      console.log('Disconnected from WebSocket');
-    };
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const milliseconds = date.getMilliseconds();
+
+        const main = document.getElementById('main');
+        main.innerText = `сегодня ${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}; время ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds};  миллисекунды: ${milliseconds < 10 ? '0' + milliseconds : milliseconds}`;
+      };
+
+      socket.onclose = () => {
+        console.log('Disconnected from WebSocket');
+        connectWebSocket(); // recursive keepalive; somehow socket drops connection on random time while the app is dockerized
+      };
+    }
+
+    connectWebSocket();
+
   </script>
   <div id="main">
   </div>

@@ -3,5 +3,5 @@ Example app
 
 
 to run, just 
-docker-compose up
+```docker-compose up```
 while in app dir

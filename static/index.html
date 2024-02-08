@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Static html using WebSocket</title>
+</head>
+<body>
+  <script>
+    const socket = new WebSocket('ws://localhost:3000');
+
+    socket.onopen = () => {
+      console.log('Connected to WebSocket');
+    };
+
+    socket.onmessage = (event) => {
+      console.log('Received data:', event.data);
+
+      const date = new Date(event.data);
+
+      const day = date.getDay();
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      const main = document.getElementById('main');
+      main.innerText = `сегодня ${day < 10 ? '0' + day : day}.${month < 10 ? '0' + month : month}.${year}; время ${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+    };
+
+    socket.onclose = () => {
+      console.log('Disconnected from WebSocket');
+    };
+  </script>
+  <div id="main">
+  </div>
+</body>
+</html>

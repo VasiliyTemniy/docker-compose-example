@@ -5,7 +5,8 @@
 </head>
 <body>
   <script>
-    const socket = new WebSocket('ws://localhost:3000');
+    const PORT = 3000;
+    const socket = new WebSocket(`ws://localhost:${PORT}`);
 
     socket.onopen = () => {
       console.log('Connected to WebSocket');

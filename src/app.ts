@@ -5,6 +5,14 @@ const app = express();
 
 import helmet from 'helmet';
 import path from 'path';
+import { isDockerized } from './utils/config.js';
+import { changeStaticHtmlPort } from './hack.js';
+
+
+// Change static html port if to 80 running in docker
+if (isDockerized) {
+  changeStaticHtmlPort();
+}
 
 const __dirname = path.resolve();
 

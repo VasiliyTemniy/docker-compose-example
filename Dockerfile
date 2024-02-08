@@ -35,6 +35,8 @@ FROM copy-prod-stage-back as install-prod-stage-back
 
 RUN yarn install --frozen-lockfile --production
 
+# Give node user access to static folder
+RUN chown -R node:node /usr/src/app/static
 
 
 FROM install-prod-stage-back as run-prod-back

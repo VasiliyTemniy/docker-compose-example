@@ -13,11 +13,11 @@ export const PORT = process.env.BACKEND_PORT ?
   '3000';
 
 const redisConfig: RedisClientOptions<RedisModules, RedisFunctions, RedisScripts> = {
-  username: process.env.REDIS_USERNAME as string,
-  password: process.env.REDIS_PASSWORD as string,
+  username: process.env.REDIS_USERNAME ? process.env.REDIS_USERNAME : undefined,
+  password: process.env.REDIS_PASSWORD ? process.env.REDIS_PASSWORD : undefined,
   socket: {
-    host: process.env.REDIS_HOST as string,
-    port: Number(process.env.REDIS_PORT as string),
+    host: process.env.REDIS_HOST ? process.env.REDIS_HOST : '127.0.0.1',
+    port: Number(process.env.REDIS_PORT ? process.env.REDIS_PORT : 6379),
     tls: false,
     reconnectStrategy: retries => Math.min(retries * 50, 1000)
   },

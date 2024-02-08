@@ -36,7 +36,7 @@
 
       socket.onclose = () => {
         console.log('Disconnected from WebSocket');
-        connectWebSocket(); // recursive keepalive; somehow socket drops connection on random time while the app is dockerized
+        setTimeout(() => connectWebSocket(), 1000); // recursive keepalive; somehow socket drops connection on random time while the app is dockerized
       };
     }
 

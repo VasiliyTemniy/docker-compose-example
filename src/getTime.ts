@@ -1,4 +1,4 @@
-import { redisClient } from "./utils/config";
+import { redisClient } from "./utils/config.js";
 
 export const getTime = async () => {
 

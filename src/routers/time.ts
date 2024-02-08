@@ -1,5 +1,5 @@
 import { Router, type RequestHandler } from "express";
-import { getTime } from "../getTime";
+import { getTime } from "../getTime.js";
 
 const timeRouter = Router();
 
